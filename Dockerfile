@@ -1,12 +1,14 @@
-FROM node:8-stretch-slim
+FROM debian:buster-slim
 LABEL Maintainer "John Ruiz <jruiz@johnruiz.com>"
 
 # prerequisites requiring root
-RUN apt update && apt install -y redis-server
+RUN apt update && apt install -y redis-server procps curl
 RUN adduser --quiet --disabled-password --gecos hubot-slack hubot-slack
-COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY ./ /home/hubot-slack/
+RUN mkdir -p /home/hubot-slack/thebot && \
+    chown -R hubot-slack:hubot-slack /home/hubot-slack && \
+    chmod +x /home/hubot-slack/*.sh
 
-ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
-CMD [ "/home/hubot-slack/thebot/bin/hubot", "--adapter", "slack" ]
+ENTRYPOINT [ "/home/hubot-slack/entrypoint.sh" ]
+CMD [ "/home/hubot-slack/run-hubot.sh" ]
 

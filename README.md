@@ -19,17 +19,23 @@ probably want to mount a local scripts directory into the docker container.
 Here's an example `docker run` command:
 
 ```
-mkdir $HOME/hubot-scripts
-docker run --name hubot \
+mkdir -p scripts
+docker create --name hubot \
   --restart always \
-  --env HUBOT_OWNER="John Ruiz <jruiz@johnruiz.com" \
-  --env HUBOT_NAME="Hubot" \
-  --env HUBOT_DESC="GitHub's hardest worker" \
-  --env HUBOT_ADAPTER="slack" \
-  --env HUBOT_SLACK_TOKEN="xoxp-YOUR-TOKEN-HERE" \
-  -v $HOME/hubot-scripts:/home/hubot-slack/thebot/scripts \
+  -e "HUBOT_OWNER=John Ruiz <jruiz@johnruiz.com" \
+  -e "HUBOT_NAME=Hubot" \
+  -e "HUBOT_DESC=The hardest worker at GitHub" \
+  -e "HUBOT_ADAPTER=slack" \
+  -e "HUBOT_SLACK_TOKEN=xoxb-BOT-TOKEN-HERE" \
+  -v $PWD/scripts:/home/hubot-slack/thebot/scripts \
   docker.pkg.github.com/jar349/hubot-slack-docker/hubot-slack-docker:latest
+docker start hubot
 ```
+
+Beware!  The first time you run `docker start` a lot of things will happen and
+it will take a while until you'll be able to invite the bot to a slack channel.
+I like to run `docker logs -f hubot` after I run `docker start` for the first
+time and I wait until I see `INFO Logged in as @hubot in workspace <your-workspace>`.
 
 In order to retain state between restarts, the container should be stopped and
 started via `docker stop hubot` and `docker start hubot`.  Of course, you
