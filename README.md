@@ -12,7 +12,6 @@ When running the docker container, five environment variables _must_ be passed.
 | HUBOT_DESC | Your clever description of your bot | "GitHub's hardest worker" |
 | HUBOT_ADAPTER | Which chat adapter to use | "slack" |
 | HUBOT_SLACK_TOKEN | The slack token for the bot to use | "xoxp-YOUR-TOKEN-HERE" |
-[Required Environment Variables][required-environment-variables]
 
 Additionally, the power of Hubot comes from extension scripts so you'll 
 probably want to mount a local scripts directory into the docker container.
