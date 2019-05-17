@@ -28,7 +28,7 @@ docker create --name hubot \
   -e "HUBOT_ADAPTER=slack" \
   -e "HUBOT_SLACK_TOKEN=xoxb-BOT-TOKEN-HERE" \
   -v $PWD/scripts:/home/hubot-slack/thebot/scripts \
-  docker.pkg.github.com/jar349/hubot-slack-docker/hubot-slack-docker:latest
+  docker.pkg.github.com/jar349/hubot-slack-docker/hubot-slack-docker:0.0.1
 docker start hubot
 ```
 
